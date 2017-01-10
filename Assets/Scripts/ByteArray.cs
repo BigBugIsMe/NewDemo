@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Collections.Generic;
+public class ByteArray {
 
-public class ByteArray : MonoBehaviour {
+    MemoryStream m_Stream = new MemoryStream();
+    BinaryReader m_Reader = null;
+    BinaryWriter m_Writer = null;
+    public ByteArray(byte[] b)
+    {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+    public int ReadInt()
+    {
+        return m_Reader.ReadInt32();
+    }
 }
