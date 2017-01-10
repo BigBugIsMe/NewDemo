@@ -30,8 +30,8 @@ public class NewDemo : MonoBehaviour {
             
         }
     }
-    void OnRenderImage()
+    void OnSetUp()
     {
-        RenderTexture s = RenderTexture.GetTemporary(1280, 640, 0);
+
     }
 }
