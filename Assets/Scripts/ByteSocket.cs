@@ -62,14 +62,38 @@ namespace Core.Net.Sockets
         SocketError m_Error;
         bool m_IsError = false;
         bool m_IsConnected = false;
-
+        List<Message> toHandleList = new List<Message>();
         public ByteSocket()
         {
             EnterFrameManager.GetInstance().Register(EnterFrame);
         }
         void EnterFrame()
         {
+            toHandleList.Clear();
+            lock(m_MsgQueue)
+            {
+                if(m_MsgQueue.Count>0)
+                {
+                    int numCount = m_MsgQueue.Count;
+                    for(int i=0;i<numCount;i++)
+                    {
+                        if(m_MsgQueue.Count>0)
+                        {
+                            Message msg = null;
+                            msg = m_MsgQueue.Dequeue();
+                            if(msg!=null)
+                            {
+                                toHandleList.Add(msg);
+                            }
+                        }
+                    }
+                }
+            }
+            //消息分发
+            for(int i=0;i<toHandleList.Count;i++)
+            {
 
+            }
         }
         /// <summary>
         /// 开始连接服务器
