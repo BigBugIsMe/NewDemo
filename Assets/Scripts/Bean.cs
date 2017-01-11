@@ -5,4 +5,9 @@ abstract public class Bean  {
 
     abstract protected bool writing();
     abstract protected bool reading();
+
+    public void Dispose()
+    {
+
+    }
 }
