@@ -3,8 +3,7 @@ using System.Collections;
 using System;
 namespace Core.Timer
 {
-
-    internal abstract class AbsTimerData
+    public abstract class AbsTimerData
     {
         //Id
         private uint m_nTimerId = 0;
@@ -30,18 +29,18 @@ namespace Core.Timer
         {
             get { return m_nNextTick; }
             set { m_nNextTick = value; }
-        } 
+        }
 
         public abstract Delegate Action
         {
-            get;set;
+            get; set;
         }
         public virtual void DoAction()
         {
             CallTime++;
         }
     }
-    internal class TimerData:AbsTimerData
+    public class TimerData : AbsTimerData
     {
         private Action m_action;
         public override Delegate Action
@@ -65,7 +64,7 @@ namespace Core.Timer
             }
         }
     }
-    internal class TimerData<T> : AbsTimerData
+    public class TimerData<T> : AbsTimerData
     {
         private Action<T> m_action;
         public override Delegate Action
@@ -101,9 +100,9 @@ namespace Core.Timer
             }
         }
     }
-    internal class TimerData<T,K> : AbsTimerData
+    public class TimerData<T, K> : AbsTimerData
     {
-        private Action<T,K> m_action;
+        private Action<T, K> m_action;
         public override Delegate Action
         {
             get
@@ -113,14 +112,14 @@ namespace Core.Timer
 
             set
             {
-                m_action = value as Action<T,K>;
+                m_action = value as Action<T, K>;
             }
         }
         public override void DoAction()
         {
             if (this != null && m_action != null)
             {
-                m_action(m_args1,m_args2);
+                m_action(m_args1, m_args2);
                 base.DoAction();
             }
         }
@@ -133,7 +132,7 @@ namespace Core.Timer
             }
             set
             {
-                m_args1 =value;
+                m_args1 = value;
             }
         }
         private K m_args2;
@@ -145,13 +144,13 @@ namespace Core.Timer
             }
             set
             {
-                m_args2 =value;
+                m_args2 = value;
             }
         }
     }
-    internal class TimerData<T, K,V> : AbsTimerData
+    public class TimerData<T, K, V> : AbsTimerData
     {
-        private Action<T, K,V> m_action;
+        private Action<T, K, V> m_action;
         public override Delegate Action
         {
             get
@@ -161,14 +160,14 @@ namespace Core.Timer
 
             set
             {
-                m_action = value as Action<T, K,V>;
+                m_action = value as Action<T, K, V>;
             }
         }
         public override void DoAction()
         {
             if (this != null && m_action != null)
             {
-                m_action(m_args1, m_args2,m_args3);
+                m_action(m_args1, m_args2, m_args3);
                 base.DoAction();
             }
         }
@@ -181,7 +180,7 @@ namespace Core.Timer
             }
             set
             {
-                m_args1 =value;
+                m_args1 = value;
             }
         }
         private K m_args2;
@@ -210,4 +209,3 @@ namespace Core.Timer
         }
     }
 }
-

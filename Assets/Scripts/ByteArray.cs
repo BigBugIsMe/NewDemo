@@ -12,7 +12,7 @@ public class ByteArray {
     public ByteArray() { }
     public ByteArray(byte[] b)
     {
-
+        
     }
     public int ReadInt()
     {
