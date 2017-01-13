@@ -41,6 +41,14 @@ namespace Core.Timer
             //先往队列中注入一个元素
             this.heap.Add(new HeapNode<K, V, P>());
         }
+        public V Peek()
+        {
+            if(this.size>=1)
+            {
+                return this.heap[1].Value;
+            }
+            return default(V);
+        }
         /// <summary>
         /// 入列
         /// </summary>
@@ -68,6 +76,13 @@ namespace Core.Timer
             {
                 this.RaiseEvent(local, newHead);
             }
+        }
+        public V Dequeue()
+        {
+            V local = (this.size < 1) ? default(V) : this.DequeueImpl();
+            V newHead = (this.size < 1) ? default(V) : this.heap[1].Value;
+            this.RaiseEvent(local, newHead);
+            return local;
         }
         private V DequeueImpl()
         {
