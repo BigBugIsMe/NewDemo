@@ -136,6 +136,61 @@ namespace Core.Timer
                 }
             }
         }
+        public V Remove(K key)
+        {
+            if (this.size >= 1)
+            {
+                V oldHead = this.heap[1].Value;
+                for(int i=0;i<=this.size;i++)
+                {
+                    if(this.heap[i].Key.Equals(key))
+                    {
+                        V local2 = this.heap[i].Value;
+                        this.Swap(i, this.size);
+                        this.heap[size--] = this.placeHolder;
+                        this.Heapify(i);
+                        V local3 = this.heap[1].Value;
+                        if (!oldHead.Equals(local3))
+                        {
+                            RaiseEvent(oldHead, local3);
+                        }
+                        return local2;
+                    }
+                }
+            }
+            return default(V);
+        }
+        public V FindByPriority(P priority,Predicate<V> match)
+        {
+            if(this.size>=1)
+            {
+                return this.Search(priority, 1, match);
+            }
+            return default(V);
+        }
+        private V Search(P priority,int i,Predicate<V> match)
+        {
+            V local = default(V);
+            if(this.IsHigher(heap[i].Priority,priority))
+            {
+                if(match(heap[i].Value))
+                {
+                    local = heap[i].Value;
+                }
+                int num = i * 2;
+                int num2 = num + 1;
+                if ((local == null) && (num <= this.size))
+                {
+                    local = Search(priority, num, match);
+                }
+                if ((local == null) && (num2 <= this.size))
+                {
+                    local = Search(priority, num2, match);
+                }
+            }
+            return local;
+        }
+        [Serializable,StructLayout(LayoutKind.Sequential)]
         private struct HeapNode<KK, VV, PP>
         {
             public KK Key;
